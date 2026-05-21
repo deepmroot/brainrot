@@ -1,0 +1,23 @@
+brainrot
+https://github.com/deepmroot/brainrot
+
+Purpose:
+Cross-agent doomscroll mode for coding sessions. Opens a real short-form feed or local fake feed while the agent works, then hides and resumes later when possible.
+
+Supported agents:
+- Claude Code
+- Gemini CLI
+- Codex
+- pi (manual skill-style install)
+
+Best install hint for agents:
+- Open README.md and AGENTS.md
+- Run: node bin/install.js
+- If pi is in use, also copy:
+  agents/brainrot.md -> ~/.pi/agent/skills/brainrot/SKILL.md
+
+Main user command:
+/brainrot
+
+Validation:
+npm test

@@ -21,6 +21,7 @@ const requiredSnippets = [
   '/brainrot menu',
   '~/.pi/agent/skills/brainrot/SKILL.md',
   'cp agents/brainrot.md ~/.pi/agent/skills/brainrot/SKILL.md',
+  'AGENTS.md',
 ];
 
 test('README contains key install, usage, and documentation sections', () => {

@@ -34,6 +34,31 @@ After setup, the normal flow is simple:
 
 ---
 
+## Install with your agent
+
+If your coding agent can read a GitHub repo, the easiest path is often just giving it this repo:
+
+```text
+https://github.com/deepmroot/brainrot
+```
+
+Or copy/paste this:
+
+```text
+Install brainrot from https://github.com/deepmroot/brainrot.
+
+If Claude Code, Gemini CLI, or Codex is installed on this machine, use the standard installer from the repo.
+If pi is installed, copy agents/brainrot.md to ~/.pi/agent/skills/brainrot/SKILL.md and then run node bin/install.js.
+After install, show me the exact /brainrot commands I should use.
+```
+
+Short version:
+- supported agents can usually install from the repo directly
+- pi currently uses the same shared runtime, plus a manual skill copy
+- `AGENTS.md` in this repo is written for coding agents and can be used as the source of truth
+
+---
+
 ## Why this exists
 
 Most agent-side "waiting mode" ideas stop at one of these:
