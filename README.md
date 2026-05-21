@@ -12,6 +12,7 @@ Cross-agent doomscroll mode for coding sessions.
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-supported-111827?style=for-the-badge&labelColor=4F46E5)](#agent-support)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-supported-111827?style=for-the-badge&labelColor=0891B2)](#agent-support)
 [![Codex](https://img.shields.io/badge/Codex-supported-111827?style=for-the-badge&labelColor=15803D)](#agent-support)
+[![pi](https://img.shields.io/badge/pi-manual-111827?style=for-the-badge&labelColor=F59E0B)](#agent-support)
 [![License](https://img.shields.io/badge/license-MIT-111827?style=for-the-badge&labelColor=334155)](LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/deepmroot/brainrot/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=0F766E)](https://github.com/deepmroot/brainrot/actions/workflows/ci.yml)
 
@@ -66,7 +67,7 @@ That is why the project includes:
 
 | Metric | Value |
 |---|---:|
-| Supported coding agents | 3 |
+| Documented agent integrations | 4 |
 | Built-in providers | 5 |
 | Hook points used | 2 |
 | Daemon port | 9346 |
@@ -77,7 +78,7 @@ That is why the project includes:
 
 <div align="center">
 
-![Agents](https://img.shields.io/badge/agents-3-1E293B?style=flat-square&labelColor=7C3AED)
+![Agents](https://img.shields.io/badge/agents-4-1E293B?style=flat-square&labelColor=7C3AED)
 ![Providers](https://img.shields.io/badge/providers-5-1E293B?style=flat-square&labelColor=0891B2)
 ![Hooks](https://img.shields.io/badge/hooks-PreToolUse%20%2B%20Stop-1E293B?style=flat-square&labelColor=15803D)
 ![Profiles](https://img.shields.io/badge/profiles-persistent-1E293B?style=flat-square&labelColor=9333EA)
@@ -137,6 +138,7 @@ That is why the project includes:
 | Claude Code | `~/.claude/settings.json` hooks + Claude skill | Full `/brainrot` workflow |
 | Gemini CLI | `~/.gemini/GEMINI.md` instructions | Agent can call brainrot hooks |
 | Codex | `~/.codex/AGENTS.md` instructions | Agent can call brainrot hooks |
+| pi | manual skill install to `~/.pi/agent/skills/brainrot/SKILL.md` | Manual skill-style install documented below |
 
 <details>
 <summary><strong>What the installer changes</strong></summary>
@@ -197,6 +199,21 @@ npm install -g github:deepmroot/brainrot
 brainrot
 ```
 
+### pi manual install
+
+If you use pi and want the simplest skill-style setup:
+
+```bash
+mkdir -p ~/.pi/agent/skills/brainrot
+cp agents/brainrot.md ~/.pi/agent/skills/brainrot/SKILL.md
+node bin/install.js
+```
+
+This keeps the install similar to other skill-based setups.
+It gives pi a Brainrot skill plus the shared runtime in `~/.brainrot/`.
+
+Note: this repo does not yet auto-wire a pi-native extension. The pi path here is a manual skill install.
+
 ### Local repository
 
 ```bash
@@ -225,6 +242,11 @@ node bin/install.js
 
 #### Codex
 - appends Brainrot instructions to `~/.codex/AGENTS.md`
+
+#### pi
+- copy `agents/brainrot.md` to `~/.pi/agent/skills/brainrot/SKILL.md`
+- run `node bin/install.js` to place the shared runtime in `~/.brainrot/`
+- manual install only for now; no bundled pi-native extension wiring yet
 
 </details>
 
