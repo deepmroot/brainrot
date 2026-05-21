@@ -145,16 +145,31 @@ Copies the runtime to:
 
 ## Install
 
-### macOS / Linux / WSL
+### Script installer
+
+#### macOS / Linux / WSL
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/deepmroot/brainrot/main/install.sh | bash
 ```
 
-### Windows PowerShell
+#### Windows PowerShell
 
 ```powershell
 irm https://raw.githubusercontent.com/deepmroot/brainrot/main/install.ps1 | iex
+```
+
+### npx path
+
+```bash
+npx -y github:deepmroot/brainrot
+```
+
+### Global npm-style install from GitHub
+
+```bash
+npm install -g github:deepmroot/brainrot
+brainrot
 ```
 
 ### Local repository
@@ -171,6 +186,22 @@ node bin/install.js
   - Gemini CLI
   - Codex
 - Edge, Chrome, or Chromium
+
+<details>
+<summary><strong>Per-agent install behavior</strong></summary>
+
+#### Claude Code
+- merges `PreToolUse` into `~/.claude/settings.json`
+- merges `Stop` into `~/.claude/settings.json`
+- installs the Claude skill to `~/.claude/skills/brainrot/`
+
+#### Gemini CLI
+- appends Brainrot instructions to `~/.gemini/GEMINI.md`
+
+#### Codex
+- appends Brainrot instructions to `~/.codex/AGENTS.md`
+
+</details>
 
 ---
 
@@ -379,6 +410,36 @@ Short version:
 /brainrot autoscroll off
 /brainrot provider youtube-shorts
 ```
+
+---
+
+## Maintainer release notes
+
+<details>
+<summary><strong>Release checklist</strong></summary>
+
+1. verify install paths still work:
+   - `install.sh`
+   - `install.ps1`
+   - `node bin/install.js`
+   - `npx -y github:deepmroot/brainrot`
+2. run smoke tests from `TESTING.md`
+3. confirm README screenshots and GIF still match behavior
+4. commit changes
+5. tag a release
+6. push branch and tags
+7. publish release notes on GitHub
+
+Example:
+
+```bash
+git add .
+git commit -m "Release v1.1.0"
+git tag v1.1.0
+git push origin main --tags
+```
+
+</details>
 
 ---
 
