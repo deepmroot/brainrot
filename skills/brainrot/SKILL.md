@@ -73,6 +73,11 @@ curl -s -X POST http://localhost:9346/config \
   -d '{"enabled":true}'
 ```
 
+```bash
+PROVIDER=$(curl -s http://localhost:9346/status | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).provider)}catch(e){console.log('local')}})")
+bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER"
+```
+
 Tell user: `"Brainrot armed. [provider] will open automatically on your next agent run. Run /brainrot menu for more options."`
 
 ---
@@ -133,16 +138,27 @@ Brainrot [ON/OFF] · mode=[mode] · position=[position] · provider=[provider] �
 ---
 
 ## `/brainrot on`
+
 ```bash
 curl -s -X POST http://localhost:9346/config -H 'Content-Type: application/json' -d '{"enabled":true}'
 ```
-Tell user: "Brainrot armed. [provider] will open on your next agent run."
+
+Get provider from status, then run visual:
+```bash
+PROVIDER=$(curl -s http://localhost:9346/status | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).provider)}catch(e){console.log('local')}})")
+bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER"
+```
+
+Tell user: "Brainrot armed. [provider] opens on next agent run."
 
 ## `/brainrot off`
+
 ```bash
 curl -s -X POST http://localhost:9346/config -H 'Content-Type: application/json' -d '{"enabled":false}'
 curl -s -X POST http://localhost:9346/stop
+bash "$HOME/.brainrot/hooks/deactivate-visual.sh"
 ```
+
 Tell user: "Brainrot disabled."
 
 ---
