@@ -14,6 +14,12 @@ ENABLED=$(echo "$STATUS" | node -e "let d='';process.stdin.on('data',c=>d+=c);pr
 PROVIDER=$(echo "$STATUS" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).provider)}catch(e){console.log('local')}})")
 
 if [ "$ENABLED" = "true" ]; then
+  # Skip if provider needs login (no .brainrot-ready.json and not local)
+  READY="$HOME/.brainrot/profiles/provider-${PROVIDER}/.brainrot-ready.json"
+  if [ "$PROVIDER" != "local" ] && [ ! -f "$READY" ]; then
+    exit 0
+  fi
+
   bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER"
   # Restore minimized browser window first (WSL), then let daemon spawn if needed
   if grep -qi microsoft /proc/version 2>/dev/null; then

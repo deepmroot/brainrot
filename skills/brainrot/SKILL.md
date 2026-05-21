@@ -24,7 +24,7 @@ curl -sf http://localhost:9346/health > /dev/null 2>&1 || \
 curl -s http://localhost:9346/status
 ```
 
-**Step 2A: If `enabled: false` AND `provider: local` AND no profiles exist → first-time setup**
+**Step 2A: If `provider: local` AND no profiles exist → first-time setup (pick provider)**
 
 Use AskUserQuestion tool with these options (max 4):
 
@@ -47,25 +47,32 @@ options: Instagram, X
 Then based on their choice, run:
 
 ```bash
-# Map: 1→tiktok  2→instagram  3→youtube-shorts  4→x  5→local
 curl -s -X POST http://localhost:9346/config \
   -H 'Content-Type: application/json' \
-  -d '{"provider":"<chosen>","enabled":true,"mode":"browser","position":"center"}'
+  -d '{"provider":"<chosen>","enabled":true}'
 ```
 
-If provider is `local`:
-- No login needed.
-- Tell user: "Brainrot armed. Local feed will open on your next agent run. Run `/brainrot demo` to preview it now."
+If provider is `local`: tell user "Brainrot armed. Local feed opens on next agent run."  
+Skip login — go straight to arm.
 
-If provider is real (tiktok/instagram/youtube-shorts/x):
-- Run demo to open browser for login:
+If provider is real (tiktok/instagram/youtube-shorts/x): fall through to Step 2B login check.
+
+**Step 2B: Check if provider needs login**
+
+```bash
+PROVIDER=$(curl -s http://localhost:9346/status | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).provider)}catch(e){console.log('local')}})")
+READY_FILE="$HOME/.brainrot/profiles/provider-${PROVIDER}/.brainrot-ready.json"
+```
+
+- If `PROVIDER=local` OR `READY_FILE` exists → skip to Step 2C (already logged in)
+- If `READY_FILE` does not exist → login required:
   ```bash
   curl -s -X POST http://localhost:9346/start
   ```
-- Tell user: "Opening browser for [provider] login. Log in, then tell me when you're done (or run `/brainrot provider-ready`)."
-- After user says done: run `/brainrot provider-ready` flow below.
+  Tell user: "Opening [provider] for login. Log in, then run `/brainrot provider-ready` when done."  
+  **Stop here** — do not arm until user confirms login.
 
-**Step 2B: If already configured and setup complete → arm**
+**Step 2C: Arm (login confirmed or not needed)**
 
 ```bash
 curl -s -X POST http://localhost:9346/config \
