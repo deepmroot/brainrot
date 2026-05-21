@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brainrot · local feed</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; width: 100vw; height: 100vh; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  #feed { position: relative; width: 100%; height: 100%; }
+  .card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 24px 80px;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+    touch-action: none;
+  }
+  .card[data-pos="active"] { transform: translateY(0); }
+  .card[data-pos="above"]  { transform: translateY(-100%); }
+  .card[data-pos="below"]  { transform: translateY(100%); }
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .card-content { position: relative; z-index: 1; max-width: 420px; }
+  .username {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+  .caption {
+    color: rgba(255,255,255,0.92);
+    font-size: 14px;
+    line-height: 1.55;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+  }
+  .stats { display: flex; gap: 20px; }
+  .stat { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .stat-icon { font-size: 26px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+  .stat-count { color: #fff; font-size: 12px; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  #badge {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    z-index: 100;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  #progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.6);
+    z-index: 100;
+    width: 0%;
+    transition: width linear;
+  }
+</style>
+</head>
+<body>
+<div id="badge"></div>
+<div id="feed"></div>
+<div id="progress"></div>
+<script>
+const CARDS = [
+  { c1:'#667eea', c2:'#764ba2', user:'@sigma_grindset', caption:'bro really said "i use claude to code" and shipped 47 features in a weekend 💀', likes:'284K', comments:'9.2K' },
+  { c1:'#f093fb', c2:'#f5576c', user:'@devmaxximum', caption:'POV: you enabled brainrot mode and now your AI is cooking while you watch tiktok', likes:'521K', comments:'18K' },
+  { c1:'#4facfe', c2:'#00f2fe', user:'@10x_vibes', caption:'the way my terminal just goes ◎ BRAINROT ON and i instantly feel 40% smarter', likes:'193K', comments:'5.1K' },
+  { c1:'#43e97b', c2:'#38f9d7', user:'@neuralnetwork_bro', caption:'nobody: \nyour claude agent at 3am: writing 847 lines while you doomscroll', likes:'872K', comments:'31K' },
+  { c1:'#fa709a', c2:'#fee140', user:'@vibe_coder', caption:'installed brainrot mode on gemini and now i have 0 reasons to actually code myself', likes:'445K', comments:'12K' },
+  { c1:'#a18cd1', c2:'#fbc2eb', user:'@terminalboss', caption:'my workflow: /brainrot on → watch shorts → come back to 3 PRs merged 🤝', likes:'339K', comments:'8.7K' },
+  { c1:'#fda085', c2:'#f6d365', user:'@buildfast_bro', caption:'it said "vibing while claude works" and honestly same', likes:'612K', comments:'22K' },
+];
+
+const feed = document.getElementById('feed');
+const badge = document.getElementById('badge');
+const progressBar = document.getElementById('progress');
+
+badge.textContent = '◎ brainrot · local feed';
+
+const cardEls = CARDS.map((data, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.background = 'linear-gradient(135deg, ' + data.c1 + ' 0%, ' + data.c2 + ' 100%)';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'card-overlay';
+
+  const content = document.createElement('div');
+  content.className = 'card-content';
+
+  const username = document.createElement('div');
+  username.className = 'username';
+  username.textContent = data.user;
+
+  const caption = document.createElement('div');
+  caption.className = 'caption';
+  caption.textContent = data.caption;
+
+  const stats = document.createElement('div');
+  stats.className = 'stats';
+
+  const likeStat = document.createElement('div');
+  likeStat.className = 'stat';
+  const likeIcon = document.createElement('div');
+  likeIcon.className = 'stat-icon';
+  likeIcon.textContent = '♥️';
+  const likeCount = document.createElement('div');
+  likeCount.className = 'stat-count';
+  likeCount.textContent = data.likes;
+  likeStat.appendChild(likeIcon);
+  likeStat.appendChild(likeCount);
+
+  const commentStat = document.createElement('div');
+  commentStat.className = 'stat';
+  const commentIcon = document.createElement('div');
+  commentIcon.className = 'stat-icon';
+  commentIcon.textContent = '💬';
+  const commentCount = document.createElement('div');
+  commentCount.className = 'stat-count';
+  commentCount.textContent = data.comments;
+  commentStat.appendChild(commentIcon);
+  commentStat.appendChild(commentCount);
+
+  stats.appendChild(likeStat);
+  stats.appendChild(commentStat);
+
+  content.appendChild(username);
+  content.appendChild(caption);
+  content.appendChild(stats);
+
+  card.appendChild(overlay);
+  card.appendChild(content);
+  feed.appendChild(card);
+  return card;
+});
+
+let current = 0;
+
+function setPositions() {
+  cardEls.forEach((el, i) => {
+    if (i === current) el.dataset.pos = 'active';
+    else if (i < current) el.dataset.pos = 'above';
+    else el.dataset.pos = 'below';
+  });
+}
+
+function goTo(idx) {
+  current = (idx + CARDS.length) % CARDS.length;
+  setPositions();
+  resetProgress();
+}
+
+setPositions();
+
+let progressStart = null;
+let progressRaf = null;
+const INTERVAL = 8000;
+
+function animateProgress(ts) {
+  if (!progressStart) progressStart = ts;
+  const elapsed = ts - progressStart;
+  const pct = Math.min(elapsed / INTERVAL * 100, 100);
+  progressBar.style.width = pct + '%';
+  if (elapsed < INTERVAL) {
+    progressRaf = requestAnimationFrame(animateProgress);
+  }
+}
+
+function resetProgress() {
+  if (progressRaf) cancelAnimationFrame(progressRaf);
+  progressBar.style.transition = 'none';
+  progressBar.style.width = '0%';
+  progressStart = null;
+  requestAnimationFrame(ts => {
+    progressBar.style.transition = '';
+    progressRaf = requestAnimationFrame(animateProgress);
+  });
+}
+
+let autoTimer = setInterval(() => goTo(current + 1), INTERVAL);
+
+function advance(dir) {
+  clearInterval(autoTimer);
+  goTo(current + dir);
+  autoTimer = setInterval(() => goTo(current + 1), INTERVAL);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'j') advance(1);
+  if (e.key === 'ArrowUp' || e.key === 'k') advance(-1);
+});
+
+let touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dy) > 40) advance(dy > 0 ? 1 : -1);
+}, { passive: true });
+
+resetProgress();
+</script>
+</body>
+</html>
