@@ -1,0 +1,12 @@
+{
+  "name": "brainrot-mode",
+  "version": "1.0.0",
+  "description": "Doomscroll while your AI codes for you. Cross-agent: Claude Code, Gemini CLI, Codex.",
+  "license": "MIT",
+  "author": "deepmroot",
+  "homepage": "https://github.com/deepmroot/brainrot",
+  "repository": { "type": "git", "url": "git+https://github.com/deepmroot/brainrot.git" },
+  "bin": { "brainrot": "./bin/install.js" },
+  "engines": { "node": ">=18" },
+  "files": ["bin/", "src/", "skills/", "agents/", "README.md", "LICENSE"]
+}
