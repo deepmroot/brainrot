@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-FLAG="/tmp/brainrot-active-$$"
+# Session flag keyed on parent PID (Claude Code's process) — survives across tool calls
+FLAG="/tmp/brainrot-active-${PPID}"
 [ -f "$FLAG" ] && exit 0
 touch "$FLAG"
 
@@ -13,6 +14,6 @@ ENABLED=$(echo "$STATUS" | node -e "let d='';process.stdin.on('data',c=>d+=c);pr
 PROVIDER=$(echo "$STATUS" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).provider)}catch(e){console.log('local')}})")
 
 if [ "$ENABLED" = "true" ]; then
-  bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER" &
+  bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER"
   curl -sf -X POST http://localhost:9346/start > /dev/null 2>&1 || true
 fi
