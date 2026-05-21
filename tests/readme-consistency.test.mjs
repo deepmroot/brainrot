@@ -13,7 +13,7 @@ const requiredSnippets = [
   'npx -y github:deepmroot/brainrot',
   'npm install -g github:deepmroot/brainrot',
   'docs/assets/real-pi-tiktok.png',
-  'docs/assets/real-browser-youtube-shorts.png',
+  'docs/assets/real-claude-code-youtube-shorts.png',
   'docs/assets/brainrot-architecture.svg',
   'docs/assets/provider-youtube-shorts.png',
   'docs/assets/provider-instagram.png',
