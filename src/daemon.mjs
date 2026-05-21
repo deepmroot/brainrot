@@ -51,6 +51,11 @@ function getBrowserCmd() {
        '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
        '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe']
     : ['google-chrome','chromium','chromium-browser','microsoft-edge'];
+  if (IS_WSL) {
+    for (const c of candidates) {
+      try { if (fs.existsSync(c)) return c; } catch {}
+    }
+  }
   return candidates[0];
 }
 
@@ -84,7 +89,10 @@ function readBody(req) {
   return new Promise(resolve => {
     let d = '';
     req.on('data', c => d += c);
-    req.on('end', () => { try { resolve(JSON.parse(d)); } catch { resolve({}); } });
+    req.on('end', () => {
+      if (!d.trim()) return resolve({});
+      try { resolve(JSON.parse(d)); } catch { resolve({}); }
+    });
   });
 }
 
