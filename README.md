@@ -97,13 +97,6 @@ That is why the project includes:
 
 <img src="docs/assets/real-pi-tiktok.png" alt="brainrot running in pi with TikTok" width="100%" />
 
-### Real provider captures
-
-| YouTube Shorts | Instagram Reels | TikTok |
-|---|---|---|
-| <img src="docs/assets/provider-youtube-shorts.png" alt="YouTube Shorts screenshot" width="100%" /> | <img src="docs/assets/provider-instagram.png" alt="Instagram Reels screenshot" width="100%" /> | <img src="docs/assets/provider-tiktok.png" alt="TikTok screenshot" width="100%" /> |
-
-Provider pages can vary by region, login state, anti-bot behavior, and autoplay policy. These captures are from live provider pages rather than mocked artwork.
 
 ---
 
