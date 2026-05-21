@@ -89,13 +89,13 @@ That is why the project includes:
 
 ## Screenshots
 
-### Brainrot running in Claude Code
-
-<img src="docs/assets/real-claude-code-youtube-shorts.png" alt="brainrot running in Claude Code with YouTube Shorts" width="100%" />
-
 ### Brainrot running in pi
 
-<img src="docs/assets/real-pi-tiktok.png" alt="brainrot running in pi with TikTok" width="100%" />
+<img src="docs/assets/real-pi-youtube-shorts.png" alt="brainrot running in pi with YouTube Shorts" width="100%" />
+
+### Brainrot running in Claude Code
+
+<img src="docs/assets/real-claude-code-tiktok.png" alt="brainrot running in Claude Code with TikTok" width="100%" />
 
 
 ---
