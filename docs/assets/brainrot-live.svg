@@ -1,0 +1,47 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" rx="24" fill="#08101D"/>
+  <rect x="52" y="52" width="1176" height="656" rx="28" fill="#0F172A" stroke="#1E293B"/>
+  <text x="84" y="110" fill="#F8FAFC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="34" font-weight="700">Armed, live, resume</text>
+  <text x="84" y="144" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18">Brainrot waits for real work, then hides and resumes the same live session later.</text>
+  <rect x="84" y="188" width="1112" height="72" rx="18" fill="#111827" stroke="#334155"/>
+  <rect x="106" y="210" width="182" height="28" rx="14" fill="#312E81"/>
+  <text x="197" y="229" text-anchor="middle" fill="#EDE9FE" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">Brainrot armed</text>
+  <text x="324" y="229" fill="#CBD5E1" font-family="JetBrains Mono,Consolas,monospace" font-size="14">provider=tiktok</text>
+  <text x="476" y="229" fill="#CBD5E1" font-family="JetBrains Mono,Consolas,monospace" font-size="14">position=center</text>
+  <text x="648" y="229" fill="#CBD5E1" font-family="JetBrains Mono,Consolas,monospace" font-size="14">mode=browser</text>
+  <text x="792" y="229" fill="#CBD5E1" font-family="JetBrains Mono,Consolas,monospace" font-size="14">autoscroll=on</text>
+  <text x="980" y="229" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13">opens on next agent run</text>
+  <rect x="84" y="294" width="430" height="364" rx="24" fill="#111827" stroke="#334155"/>
+  <text x="114" y="334" fill="#F8FAFC" font-family="JetBrains Mono,Consolas,monospace" font-size="18">Agent run timeline</text>
+  <path d="M136 392H462" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="160" cy="392" r="10" fill="#7C3AED"/>
+  <circle cx="252" cy="392" r="10" fill="#06B6D4"/>
+  <circle cx="344" cy="392" r="10" fill="#22C55E"/>
+  <circle cx="436" cy="392" r="10" fill="#F59E0B"/>
+  <text x="138" y="432" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Armed</text>
+  <text x="138" y="454" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">waiting for work</text>
+  <text x="230" y="432" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Live</text>
+  <text x="230" y="454" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">browser shown</text>
+  <text x="322" y="432" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Hidden</text>
+  <text x="322" y="454" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">agent done</text>
+  <text x="414" y="432" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Resume</text>
+  <text x="414" y="454" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">same session</text>
+  <rect x="114" y="504" width="370" height="110" rx="18" fill="#0F172A" stroke="#1F2937"/>
+  <text x="138" y="542" fill="#E2E8F0" font-family="JetBrains Mono,Consolas,monospace" font-size="14">/brainrot</text>
+  <text x="138" y="570" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14">Arms Brainrot after setup.</text>
+  <text x="138" y="594" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14">/brainrot menu launches immediately if needed.</text>
+  <rect x="550" y="294" width="646" height="364" rx="24" fill="#09090F" stroke="#27272A"/>
+  <rect x="582" y="326" width="604" height="300" rx="24" fill="#0B1020" stroke="#1F2937"/>
+  <rect x="614" y="356" width="162" height="28" rx="14" fill="#18181B"/>
+  <text x="695" y="375" text-anchor="middle" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700">SAME LIVE SESSION</text>
+  <rect x="614" y="408" width="540" height="142" rx="20" fill="url(#g2)"/>
+  <defs>
+    <linearGradient id="g2" x1="614" y1="408" x2="1154" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.35" stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <text x="644" y="586" fill="#F8FAFC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24" font-weight="700">No reset between runs</text>
+  <text x="644" y="612" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15">The browser window is hidden, then shown again later with the same provider profile and page state.</text>
+</svg>

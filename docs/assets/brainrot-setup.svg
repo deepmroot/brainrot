@@ -1,0 +1,39 @@
+<svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="760" rx="24" fill="#0B1020"/>
+  <rect x="52" y="52" width="1176" height="656" rx="28" fill="#0F172A" stroke="#1E293B"/>
+  <text x="84" y="110" fill="#F8FAFC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="34" font-weight="700">Guided setup</text>
+  <text x="84" y="144" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18">One command. Pick a provider. Arm the next coding run.</text>
+  <rect x="84" y="186" width="480" height="474" rx="24" fill="#111827" stroke="#334155"/>
+  <circle cx="114" cy="216" r="6" fill="#FB7185"/>
+  <circle cx="134" cy="216" r="6" fill="#F59E0B"/>
+  <circle cx="154" cy="216" r="6" fill="#22C55E"/>
+  <text x="104" y="260" fill="#E2E8F0" font-family="JetBrains Mono,Consolas,monospace" font-size="18">$ /brainrot</text>
+  <text x="104" y="308" fill="#94A3B8" font-family="JetBrains Mono,Consolas,monospace" font-size="14">Pick your Brainrot provider</text>
+  <rect x="104" y="334" width="440" height="56" rx="16" fill="#1E293B" stroke="#7C3AED"/>
+  <text x="126" y="366" fill="#F8FAFC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700">TikTok</text>
+  <text x="126" y="387" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">One-time login required. Reuses the same persistent profile.</text>
+  <rect x="104" y="404" width="440" height="56" rx="16" fill="#172033"/>
+  <text x="126" y="436" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700">Instagram</text>
+  <text x="126" y="457" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">Reels session persists between coding runs.</text>
+  <rect x="104" y="474" width="440" height="56" rx="16" fill="#172033"/>
+  <text x="126" y="506" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700">YouTube Shorts</text>
+  <text x="126" y="527" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">Includes playback kickstart logic for short autoplay.</text>
+  <rect x="104" y="544" width="440" height="56" rx="16" fill="#172033"/>
+  <text x="126" y="576" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700">X or Local fake feed</text>
+  <text x="126" y="597" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">Use a live feed or the built-in local preview without login.</text>
+  <rect x="606" y="186" width="570" height="474" rx="24" fill="#09090F" stroke="#27272A"/>
+  <rect x="642" y="222" width="220" height="24" rx="12" fill="#18181B"/>
+  <text x="752" y="239" text-anchor="middle" fill="#E2E8F0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700">BROWSER LOGIN WINDOW</text>
+  <rect x="642" y="274" width="498" height="222" rx="22" fill="url(#g1)"/>
+  <defs>
+    <linearGradient id="g1" x1="642" y1="274" x2="1140" y2="496" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.55" stop-color="#EC4899"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <text x="676" y="546" fill="#F8FAFC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="28" font-weight="700">Login once</text>
+  <text x="676" y="580" fill="#94A3B8" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17">The profile is stored under profiles/provider-&lt;name&gt; and reused later.</text>
+  <rect x="676" y="606" width="216" height="14" rx="7" fill="#7C3AED"/>
+  <rect x="904" y="606" width="118" height="14" rx="7" fill="#06B6D4"/>
+</svg>
