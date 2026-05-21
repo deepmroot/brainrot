@@ -89,17 +89,13 @@ That is why the project includes:
 
 ## Screenshots
 
-### Demo capture
+### Brainrot running in pi
 
-<img src="docs/assets/brainrot-demo.gif" alt="brainrot animated demo" width="100%" />
+<img src="docs/assets/real-pi-tiktok.png" alt="brainrot running in pi with TikTok" width="100%" />
 
-### Guided setup
+### Real browser session
 
-<img src="docs/assets/brainrot-setup.svg" alt="brainrot guided setup screenshot" width="100%" />
-
-### Armed and resumed session flow
-
-<img src="docs/assets/brainrot-live.svg" alt="brainrot armed and resumed session screenshot" width="100%" />
+<img src="docs/assets/real-browser-youtube-shorts.png" alt="brainrot browser session with YouTube Shorts" width="100%" />
 
 ### Real provider captures
 
