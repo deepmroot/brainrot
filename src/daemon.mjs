@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 
 const IS_WSL = (() => {
   try { return fs.readFileSync('/proc/version','utf8').toLowerCase().includes('microsoft'); } catch { return false; }
@@ -65,24 +65,38 @@ function getUrl() {
   return PROVIDER_URLS[config.provider] || PROVIDER_URLS.tiktok;
 }
 
-function getWindowPosition() {
-  // position config: center (default), left, right
+function getScreenSize() {
+  if (!IS_WSL) return { sw: 1920, sh: 1080 };
+  try {
+    const r = spawnSync('powershell.exe', [
+      '-NoProfile', '-NonInteractive', '-Command',
+      'Add-Type -AssemblyName System.Windows.Forms; $s=[System.Windows.Forms.Screen]::PrimaryScreen.Bounds; Write-Output "$($s.Width) $($s.Height)"'
+    ], { encoding: 'utf8', timeout: 3000 });
+    const parts = (r.stdout || '').trim().split(' ');
+    if (parts.length === 2) return { sw: parseInt(parts[0]) || 1920, sh: parseInt(parts[1]) || 1080 };
+  } catch {}
+  return { sw: 1920, sh: 1080 };
+}
+
+function getWindowPos(sw, sh) {
   const pos = config.position || 'center';
-  const W = 480, H = 860;
-  if (pos === 'left')  return { w: W, h: H, x: 40,   y: 80 };
-  if (pos === 'right') return { w: W, h: H, x: 1400,  y: 80 };
-  return                      { w: W, h: H, x: 720,   y: 80 };  // center ~1920px wide screen
+  const W = 480, H = Math.min(860, sh - 80);
+  if (pos === 'left')  return { w: W, h: H, x: 40,             y: 40 };
+  if (pos === 'right') return { w: W, h: H, x: sw - W - 40,    y: 40 };
+  return                      { w: W, h: H, x: Math.round((sw - W) / 2), y: 40 };
 }
 
 function startBrowser() {
   if (browserActive) return;
   const profileDir = path.join(PROFILES_DIR, `provider-${config.provider}`);
   fs.mkdirSync(profileDir, { recursive: true });
-  const { w, h, x, y } = getWindowPosition();
+  const { sw, sh } = getScreenSize();
+  const { w, h, x, y } = getWindowPos(sw, sh);
   const proc = spawn(getBrowserCmd(), [
     `--user-data-dir=${profileDir}`,
     '--no-first-run', '--no-default-browser-check',
     '--disable-features=TranslateUI',
+    '--restore-last-session=false',
     `--window-size=${w},${h}`,
     `--window-position=${x},${y}`,
     getUrl(),
