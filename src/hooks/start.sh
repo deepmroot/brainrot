@@ -15,5 +15,14 @@ PROVIDER=$(echo "$STATUS" | node -e "let d='';process.stdin.on('data',c=>d+=c);p
 
 if [ "$ENABLED" = "true" ]; then
   bash "$HOME/.brainrot/hooks/activate-visual.sh" "$PROVIDER"
+  # Restore minimized browser window first (WSL), then let daemon spawn if needed
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    powershell.exe -NoProfile -NonInteractive -Command "
+      Add-Type -TypeDefinition 'using System;using System.Runtime.InteropServices;public class W{[DllImport(\"user32.dll\")]public static extern bool ShowWindow(IntPtr h,int n);}' -ErrorAction SilentlyContinue
+      Get-Process -Name msedge,chrome -ErrorAction SilentlyContinue |
+        Where-Object { \$_.MainWindowHandle -ne [IntPtr]::Zero } |
+        ForEach-Object { [W]::ShowWindow(\$_.MainWindowHandle, 9) }
+    " > /dev/null 2>&1 || true
+  fi
   curl -sf -X POST http://localhost:9346/start > /dev/null 2>&1 || true
 fi

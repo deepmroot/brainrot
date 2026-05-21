@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
-import { spawn, execSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 
 const IS_WSL = (() => {
   try { return fs.readFileSync('/proc/version','utf8').toLowerCase().includes('microsoft'); } catch { return false; }
@@ -46,24 +46,18 @@ let config = loadConfig();
 let browserActive = false;
 
 function getBrowserCmd() {
+  const candidates = IS_WSL
+    ? ['/mnt/c/Program Files/Microsoft/Edge/Application/msedge.exe',
+       '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+       '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe']
+    : ['google-chrome','chromium','chromium-browser','microsoft-edge'];
   if (IS_WSL) {
-    const wslCandidates = [
-      '/mnt/c/Program Files/Microsoft/Edge/Application/msedge.exe',
-      '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-      '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
-    ];
-    for (const c of wslCandidates) {
+    for (const c of candidates) {
       try { if (fs.existsSync(c)) return c; } catch {}
     }
-    return wslCandidates[0];
   }
-  const nixCandidates = ['google-chrome', 'chromium', 'chromium-browser', 'microsoft-edge'];
-  for (const c of nixCandidates) {
-    try { execSync(`which ${c}`, { stdio: 'ignore' }); return c; } catch {}
-  }
-  return nixCandidates[0];
+  return candidates[0];
 }
-
 
 function getUrl() {
   if (config.browserUrl) return config.browserUrl;
@@ -71,17 +65,30 @@ function getUrl() {
   return PROVIDER_URLS[config.provider] || PROVIDER_URLS.tiktok;
 }
 
+function getWindowPosition() {
+  // position config: center (default), left, right
+  const pos = config.position || 'center';
+  const W = 480, H = 860;
+  if (pos === 'left')  return { w: W, h: H, x: 40,   y: 80 };
+  if (pos === 'right') return { w: W, h: H, x: 1400,  y: 80 };
+  return                      { w: W, h: H, x: 720,   y: 80 };  // center ~1920px wide screen
+}
+
 function startBrowser() {
   if (browserActive) return;
   const profileDir = path.join(PROFILES_DIR, `provider-${config.provider}`);
   fs.mkdirSync(profileDir, { recursive: true });
+  const { w, h, x, y } = getWindowPosition();
   const proc = spawn(getBrowserCmd(), [
     `--user-data-dir=${profileDir}`,
     '--no-first-run', '--no-default-browser-check',
-    '--disable-features=TranslateUI', getUrl(),
+    '--disable-features=TranslateUI',
+    `--window-size=${w},${h}`,
+    `--window-position=${x},${y}`,
+    getUrl(),
   ], { detached: true, stdio: 'ignore' });
-  proc.unref();
   proc.on('error', () => { browserActive = false; });
+  proc.unref();
   browserActive = true;
 }
 
