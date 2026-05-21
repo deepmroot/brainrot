@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
 
 const IS_WSL = (() => {
   try { return fs.readFileSync('/proc/version','utf8').toLowerCase().includes('microsoft'); } catch { return false; }
@@ -46,18 +46,24 @@ let config = loadConfig();
 let browserActive = false;
 
 function getBrowserCmd() {
-  const candidates = IS_WSL
-    ? ['/mnt/c/Program Files/Microsoft/Edge/Application/msedge.exe',
-       '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-       '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe']
-    : ['google-chrome','chromium','chromium-browser','microsoft-edge'];
   if (IS_WSL) {
-    for (const c of candidates) {
+    const wslCandidates = [
+      '/mnt/c/Program Files/Microsoft/Edge/Application/msedge.exe',
+      '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+      '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
+    ];
+    for (const c of wslCandidates) {
       try { if (fs.existsSync(c)) return c; } catch {}
     }
+    return wslCandidates[0];
   }
-  return candidates[0];
+  const nixCandidates = ['google-chrome', 'chromium', 'chromium-browser', 'microsoft-edge'];
+  for (const c of nixCandidates) {
+    try { execSync(`which ${c}`, { stdio: 'ignore' }); return c; } catch {}
+  }
+  return nixCandidates[0];
 }
+
 
 function getUrl() {
   if (config.browserUrl) return config.browserUrl;
@@ -75,6 +81,7 @@ function startBrowser() {
     '--disable-features=TranslateUI', getUrl(),
   ], { detached: true, stdio: 'ignore' });
   proc.unref();
+  proc.on('error', () => { browserActive = false; });
   browserActive = true;
 }
 
