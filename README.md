@@ -13,6 +13,7 @@ Cross-agent doomscroll mode for coding sessions.
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-supported-111827?style=for-the-badge&labelColor=0891B2)](#agent-support)
 [![Codex](https://img.shields.io/badge/Codex-supported-111827?style=for-the-badge&labelColor=15803D)](#agent-support)
 [![License](https://img.shields.io/badge/license-MIT-111827?style=for-the-badge&labelColor=334155)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/deepmroot/brainrot/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=0F766E)](https://github.com/deepmroot/brainrot/actions/workflows/ci.yml)
 
 </div>
 
@@ -29,6 +30,33 @@ After setup, the normal flow is simple:
 3. brainrot opens only while the agent is working
 4. brainrot hides when the run ends
 5. the same live session is resumed later when possible
+
+---
+
+## Why this exists
+
+Most agent-side "waiting mode" ideas stop at one of these:
+
+- a browser window that always opens from scratch
+- a fake overlay with no real provider support
+- a one-off hook script that breaks once setup gets more complex
+
+`brainrot` exists to make that experience feel like a real product instead of a gimmick.
+
+It is built around four practical goals:
+
+1. support real coding agents, not one custom fork
+2. support real providers, not just a mock overlay
+3. preserve browser state and provider login between runs
+4. stay opt-in, controllable, and easy to disable
+
+That is why the project includes:
+
+- agent-specific install wiring
+- a persistent local daemon
+- per-provider browser profiles
+- arm/live/resume behavior instead of always-open behavior
+- real-provider setup flow plus a local preview mode
 
 ---
 
@@ -72,6 +100,14 @@ After setup, the normal flow is simple:
 ### Armed and resumed session flow
 
 <img src="docs/assets/brainrot-live.svg" alt="brainrot armed and resumed session screenshot" width="100%" />
+
+### Real provider captures
+
+| YouTube Shorts | Instagram Reels | TikTok |
+|---|---|---|
+| <img src="docs/assets/provider-youtube-shorts.png" alt="YouTube Shorts screenshot" width="100%" /> | <img src="docs/assets/provider-instagram.png" alt="Instagram Reels screenshot" width="100%" /> | <img src="docs/assets/provider-tiktok.png" alt="TikTok screenshot" width="100%" /> |
+
+Provider pages can vary by region, login state, anti-bot behavior, and autoplay policy. These captures are from live provider pages rather than mocked artwork.
 
 ---
 
@@ -367,6 +403,10 @@ Brainrot includes a playback kickstart step for Shorts that:
 
 ---
 
+## Architecture
+
+<img src="docs/assets/brainrot-architecture.svg" alt="brainrot runtime architecture diagram" width="100%" />
+
 ## Internal architecture
 
 ```text
@@ -398,7 +438,7 @@ Brainrot includes a playback kickstart step for Shorts that:
 
 For a full checklist, see:
 
-- [`TESTING.md`](docs/../TESTING.md)
+- [`TESTING.md`](TESTING.md)
 
 Short version:
 

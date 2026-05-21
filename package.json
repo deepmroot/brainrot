@@ -7,8 +7,11 @@
   "homepage": "https://github.com/deepmroot/brainrot",
   "repository": { "type": "git", "url": "git+https://github.com/deepmroot/brainrot.git" },
   "bin": { "brainrot": "./bin/install.js" },
+  "scripts": {
+    "test": "node --test \"tests/**/*.mjs\""
+  },
   "engines": { "node": ">=18" },
-  "files": ["bin/", "src/", "skills/", "agents/", "README.md", "LICENSE"],
+  "files": ["bin/", "src/", "skills/", "agents/", "README.md", "TESTING.md", "LICENSE"],
   "keywords": ["brainrot", "tiktok", "claude-code", "gemini", "codex", "doomscroll", "ai-agent"],
   "bugs": { "url": "https://github.com/deepmroot/brainrot/issues" }
 }
