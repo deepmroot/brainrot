@@ -145,6 +145,7 @@ That is why the project includes:
 | Claude Code support | yes | partial | no | partial |
 | Gemini CLI support | yes | partial | no | no |
 | Codex support | yes | partial | no | no |
+| pi support | manual | partial | no | partial |
 | Guided first-time setup | yes | no | no | yes |
 | Real providers | yes | maybe | yes | no |
 | Persistent per-provider profiles | yes | no | maybe | no |
